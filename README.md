@@ -11,21 +11,35 @@ Not every retrieval problem needs a vector database. This project provides empir
 
 ## Architecture
 
-```
-                    Same Documents
-                          │
-            ┌─────────────┴─────────────┐
-            │                             │
-     PageIndex Pipeline            Vector DB Pipeline
-     (TF-IDF, no embeddings)       (SentenceTransformers + FAISS)
-            │                             │
-     Keyword / TF-IDF              Semantic Search
-            │                             │
-       Search Results               Search Results
-            └─────────────┬─────────────┘
-                          │
-                 Evaluation & Metrics
-          (Speed │ Accuracy │ Memory Usage)
+```mermaid
+graph TD
+    A["📄 Same Documents<br/>(PDFs)"] --> B["PageIndex Pipeline<br/>(TF-IDF, No Embeddings)"]
+    A --> C["Vector DB Pipeline<br/>(SentenceTransformers + FAISS)"]
+
+    B --> D["Keyword / TF-IDF<br/>Matching"]
+    C --> E["Semantic Search<br/>(Dense Vectors)"]
+
+    D --> F["🔍 Search Results"]
+    E --> G["🔍 Search Results"]
+
+    F --> H["📊 Evaluation & Metrics"]
+    G --> H
+
+    H --> I["⚡ Speed"]
+    H --> J["🎯 Accuracy"]
+    H --> K["💾 Memory Usage"]
+
+    style A fill:#4A90D9,stroke:#2C5F8A,color:#fff
+    style B fill:#2ECC71,stroke:#1A9C54,color:#fff
+    style C fill:#E74C3C,stroke:#C0392B,color:#fff
+    style D fill:#27AE60,stroke:#1E8449,color:#fff
+    style E fill:#C0392B,stroke:#96281B,color:#fff
+    style F fill:#F39C12,stroke:#D68910,color:#fff
+    style G fill:#F39C12,stroke:#D68910,color:#fff
+    style H fill:#8E44AD,stroke:#6C3483,color:#fff
+    style I fill:#3498DB,stroke:#2176AE,color:#fff
+    style J fill:#3498DB,stroke:#2176AE,color:#fff
+    style K fill:#3498DB,stroke:#2176AE,color:#fff
 ```
 
 ## Metrics Compared
