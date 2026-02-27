@@ -29,17 +29,17 @@ graph TD
     H --> J["🎯 Accuracy"]
     H --> K["💾 Memory Usage"]
 
-    style A fill:#4A90D9,stroke:#2C5F8A,color:#fff
-    style B fill:#2ECC71,stroke:#1A9C54,color:#fff
-    style C fill:#E74C3C,stroke:#C0392B,color:#fff
-    style D fill:#27AE60,stroke:#1E8449,color:#fff
-    style E fill:#C0392B,stroke:#96281B,color:#fff
-    style F fill:#F39C12,stroke:#D68910,color:#fff
-    style G fill:#F39C12,stroke:#D68910,color:#fff
-    style H fill:#8E44AD,stroke:#6C3483,color:#fff
-    style I fill:#3498DB,stroke:#2176AE,color:#fff
-    style J fill:#3498DB,stroke:#2176AE,color:#fff
-    style K fill:#3498DB,stroke:#2176AE,color:#fff
+    style A fill:#0F2027,stroke:#00BCD4,color:#00E5FF
+    style B fill:#1A3A2A,stroke:#00E676,color:#B9F6CA
+    style C fill:#1A1A2E,stroke:#7C4DFF,color:#D1C4E9
+    style D fill:#003D2B,stroke:#00C853,color:#CCFF90
+    style E fill:#12005E,stroke:#651FFF,color:#EDE7F6
+    style F fill:#BF360C,stroke:#FF6D00,color:#FFE0B2
+    style G fill:#BF360C,stroke:#FF6D00,color:#FFE0B2
+    style H fill:#004D40,stroke:#1DE9B6,color:#E0F2F1
+    style I fill:#01579B,stroke:#40C4FF,color:#E1F5FE
+    style J fill:#1A237E,stroke:#536DFE,color:#E8EAF6
+    style K fill:#880E4F,stroke:#FF4081,color:#FCE4EC
 ```
 
 ## Metrics Compared
