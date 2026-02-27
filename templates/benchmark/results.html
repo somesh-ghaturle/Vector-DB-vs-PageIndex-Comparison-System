@@ -1,0 +1,220 @@
+{% extends "benchmark/base.html" %}
+{% block title %}Results — Benchmark {{ s.id.hex|truncatechars:10 }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Benchmark Results</h1>
+    <p>Session {{ s.id.hex|truncatechars:10 }} &middot; {{ s.created_at|date:"M d, Y H:i" }} &middot; Top-{{ s.top_k }}</p>
+</div>
+
+<!-- Pipeline Labels -->
+<div class="comparison-header">
+    <div class="pipeline-tag pi">🟢 PageIndex (TF-IDF)</div>
+    <div class="pipeline-tag vdb">⚫ Vector DB (FAISS)</div>
+</div>
+
+<!-- Speed Metrics -->
+<div class="card">
+    <div class="card-header">
+        <div class="icon">⚡</div>
+        <h2>Speed</h2>
+    </div>
+    <div class="results-grid">
+        <div class="metric-card pi">
+            <div class="label">PageIndex Build Time</div>
+            <div class="value">{{ s.pi_build_time|floatformat:4 }}</div>
+            <div class="unit">seconds</div>
+        </div>
+        <div class="metric-card vdb">
+            <div class="label">Vector DB Build Time</div>
+            <div class="value">{{ s.vdb_build_time|floatformat:4 }}</div>
+            <div class="unit">seconds</div>
+        </div>
+        <div class="metric-card pi">
+            <div class="label">PageIndex Avg Latency</div>
+            <div class="value">{{ s.pi_avg_latency|floatformat:3 }}</div>
+            <div class="unit">ms</div>
+        </div>
+        <div class="metric-card vdb">
+            <div class="label">Vector DB Avg Latency</div>
+            <div class="value">{{ s.vdb_avg_latency|floatformat:3 }}</div>
+            <div class="unit">ms</div>
+        </div>
+        <div class="metric-card pi">
+            <div class="label">PageIndex P95 Latency</div>
+            <div class="value">{{ s.pi_p95_latency|floatformat:3 }}</div>
+            <div class="unit">ms</div>
+        </div>
+        <div class="metric-card vdb">
+            <div class="label">Vector DB P95 Latency</div>
+            <div class="value">{{ s.vdb_p95_latency|floatformat:3 }}</div>
+            <div class="unit">ms</div>
+        </div>
+    </div>
+</div>
+
+<!-- Accuracy Metrics -->
+<div class="card">
+    <div class="card-header">
+        <div class="icon">🎯</div>
+        <h2>Accuracy</h2>
+    </div>
+    <div class="results-grid">
+        <div class="metric-card pi">
+            <div class="label">PageIndex Recall@{{ s.top_k }}</div>
+            <div class="value">{{ s.pi_recall|floatformat:4 }}</div>
+        </div>
+        <div class="metric-card vdb">
+            <div class="label">Vector DB Recall@{{ s.top_k }}</div>
+            <div class="value">{{ s.vdb_recall|floatformat:4 }}</div>
+        </div>
+        <div class="metric-card pi">
+            <div class="label">PageIndex Precision@{{ s.top_k }}</div>
+            <div class="value">{{ s.pi_precision|floatformat:4 }}</div>
+        </div>
+        <div class="metric-card vdb">
+            <div class="label">Vector DB Precision@{{ s.top_k }}</div>
+            <div class="value">{{ s.vdb_precision|floatformat:4 }}</div>
+        </div>
+        <div class="metric-card pi">
+            <div class="label">PageIndex MRR</div>
+            <div class="value">{{ s.pi_mrr|floatformat:4 }}</div>
+        </div>
+        <div class="metric-card vdb">
+            <div class="label">Vector DB MRR</div>
+            <div class="value">{{ s.vdb_mrr|floatformat:4 }}</div>
+        </div>
+    </div>
+</div>
+
+<!-- Memory -->
+<div class="card">
+    <div class="card-header">
+        <div class="icon">💾</div>
+        <h2>Memory Usage</h2>
+    </div>
+    <div class="results-grid">
+        <div class="metric-card pi">
+            <div class="label">PageIndex Memory</div>
+            <div class="value">{{ s.pi_memory_mb|floatformat:1 }}</div>
+            <div class="unit">MB</div>
+        </div>
+        <div class="metric-card vdb">
+            <div class="label">Vector DB Memory</div>
+            <div class="value">{{ s.vdb_memory_mb|floatformat:1 }}</div>
+            <div class="unit">MB</div>
+        </div>
+    </div>
+</div>
+
+<!-- Comparison Table -->
+<div class="card">
+    <div class="card-header">
+        <div class="icon">📊</div>
+        <h2>Side-by-Side Comparison</h2>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Metric</th>
+                <th>🟢 PageIndex</th>
+                <th>⚫ Vector DB</th>
+                <th>Winner</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Build Time (sec)</td>
+                <td>{{ s.pi_build_time|floatformat:4 }}</td>
+                <td>{{ s.vdb_build_time|floatformat:4 }}</td>
+                <td>{% if s.pi_build_time < s.vdb_build_time %}<span class="winner">PageIndex</span>{% else %}<span class="winner">Vector DB</span>{% endif %}</td>
+            </tr>
+            <tr>
+                <td>Avg Latency (ms)</td>
+                <td>{{ s.pi_avg_latency|floatformat:3 }}</td>
+                <td>{{ s.vdb_avg_latency|floatformat:3 }}</td>
+                <td>{% if s.pi_avg_latency < s.vdb_avg_latency %}<span class="winner">PageIndex</span>{% else %}<span class="winner">Vector DB</span>{% endif %}</td>
+            </tr>
+            <tr>
+                <td>P95 Latency (ms)</td>
+                <td>{{ s.pi_p95_latency|floatformat:3 }}</td>
+                <td>{{ s.vdb_p95_latency|floatformat:3 }}</td>
+                <td>{% if s.pi_p95_latency < s.vdb_p95_latency %}<span class="winner">PageIndex</span>{% else %}<span class="winner">Vector DB</span>{% endif %}</td>
+            </tr>
+            <tr>
+                <td>Recall@{{ s.top_k }}</td>
+                <td>{{ s.pi_recall|floatformat:4 }}</td>
+                <td>{{ s.vdb_recall|floatformat:4 }}</td>
+                <td>{% if s.pi_recall > s.vdb_recall %}<span class="winner">PageIndex</span>{% elif s.vdb_recall > s.pi_recall %}<span class="winner">Vector DB</span>{% else %}Tie{% endif %}</td>
+            </tr>
+            <tr>
+                <td>Precision@{{ s.top_k }}</td>
+                <td>{{ s.pi_precision|floatformat:4 }}</td>
+                <td>{{ s.vdb_precision|floatformat:4 }}</td>
+                <td>{% if s.pi_precision > s.vdb_precision %}<span class="winner">PageIndex</span>{% elif s.vdb_precision > s.pi_precision %}<span class="winner">Vector DB</span>{% else %}Tie{% endif %}</td>
+            </tr>
+            <tr>
+                <td>MRR</td>
+                <td>{{ s.pi_mrr|floatformat:4 }}</td>
+                <td>{{ s.vdb_mrr|floatformat:4 }}</td>
+                <td>{% if s.pi_mrr > s.vdb_mrr %}<span class="winner">PageIndex</span>{% elif s.vdb_mrr > s.pi_mrr %}<span class="winner">Vector DB</span>{% else %}Tie{% endif %}</td>
+            </tr>
+            <tr>
+                <td>Memory (MB)</td>
+                <td>{{ s.pi_memory_mb|floatformat:1 }}</td>
+                <td>{{ s.vdb_memory_mb|floatformat:1 }}</td>
+                <td>{% if s.pi_memory_mb < s.vdb_memory_mb %}<span class="winner">PageIndex</span>{% else %}<span class="winner">Vector DB</span>{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Per-Query Breakdown -->
+{% if s.per_query_results %}
+<div class="card">
+    <div class="card-header">
+        <div class="icon">📝</div>
+        <h2>Per-Query Breakdown</h2>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Query</th>
+                <th>PI Recall</th>
+                <th>VDB Recall</th>
+                <th>Relevant Pages</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for q in s.per_query_results %}
+            <tr>
+                <td>{{ q.query }}</td>
+                <td>{% if q.pi_recall >= q.vdb_recall %}<span class="winner">{{ q.pi_recall|floatformat:4 }}</span>{% else %}<span class="loser">{{ q.pi_recall|floatformat:4 }}</span>{% endif %}</td>
+                <td>{% if q.vdb_recall >= q.pi_recall %}<span class="winner">{{ q.vdb_recall|floatformat:4 }}</span>{% else %}<span class="loser">{{ q.vdb_recall|floatformat:4 }}</span>{% endif %}</td>
+                <td>{{ q.relevant }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+<!-- Insight -->
+<div class="insight-box">
+    <h3>💡 Key Insight</h3>
+    {% if s.pi_avg_latency < s.vdb_avg_latency and s.vdb_recall > s.pi_recall %}
+    <p>PageIndex is <strong>{{ s.vdb_avg_latency|floatformat:0 }}÷{{ s.pi_avg_latency|floatformat:1 }} faster</strong> in query latency, while Vector DB achieves <strong>better semantic recall</strong>. This demonstrates that vector databases are not always the optimal solution — especially for keyword-heavy or latency-critical environments where TF-IDF delivers comparable or better results at a fraction of the cost.</p>
+    {% elif s.pi_avg_latency < s.vdb_avg_latency %}
+    <p>PageIndex wins on <strong>both speed and accuracy</strong> for this dataset. The Vector DB overhead (embedding computation + FAISS indexing) is not justified when lexical matching suffices. Consider the nature of your queries before defaulting to dense retrieval.</p>
+    {% else %}
+    <p>Vector DB outperforms PageIndex on this dataset. The semantic understanding from dense embeddings provides meaningful improvements that justify the additional computational cost. Consider hybrid approaches for production systems.</p>
+    {% endif %}
+</div>
+
+<!-- Actions -->
+<div style="text-align: center; margin-top: 2rem;">
+    <a href="{% url 'benchmark:home' %}" class="btn btn-primary">Run Another Benchmark</a>
+    <a href="{% url 'benchmark:history' %}" class="btn btn-outline" style="margin-left: 0.5rem;">View History</a>
+</div>
+
+{% endblock %}

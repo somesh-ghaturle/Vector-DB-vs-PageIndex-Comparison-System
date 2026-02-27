@@ -1,0 +1,56 @@
+{% extends "benchmark/base.html" %}
+{% block title %}Benchmark History{% endblock %}
+{% block nav_history %}active{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Benchmark History</h1>
+    <p>All past benchmark sessions</p>
+</div>
+
+{% if sessions %}
+<div class="card">
+    <table>
+        <thead>
+            <tr>
+                <th>Session</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>PDFs</th>
+                <th>Queries</th>
+                <th>PI Latency</th>
+                <th>VDB Latency</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in sessions %}
+            <tr>
+                <td><strong>{{ s.id.hex|truncatechars:10 }}</strong></td>
+                <td>{{ s.created_at|date:"M d, H:i" }}</td>
+                <td>
+                    <span class="status-dot {{ s.status }}"></span>
+                    {{ s.get_status_display }}
+                </td>
+                <td>{{ s.pdfs.count }}</td>
+                <td>{{ s.queries.count }}</td>
+                <td>{% if s.pi_avg_latency %}{{ s.pi_avg_latency|floatformat:2 }} ms{% else %}—{% endif %}</td>
+                <td>{% if s.vdb_avg_latency %}{{ s.vdb_avg_latency|floatformat:2 }} ms{% else %}—{% endif %}</td>
+                <td>
+                    {% if s.status == "completed" %}
+                    <a href="{% url 'benchmark:results' s.id %}" class="btn btn-outline" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;">View</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="card" style="text-align: center; padding: 3rem;">
+    <p style="color: var(--gray-mid); font-size: 1.1rem;">No benchmarks yet.</p>
+    <a href="{% url 'benchmark:home' %}" class="btn btn-primary" style="margin-top: 1rem;">Run Your First Benchmark</a>
+</div>
+{% endif %}
+
+{% endblock %}

@@ -40,12 +40,14 @@ class VectorSearcher:
             if idx == -1:
                 continue
             page = self.embedder.pages[idx]
-            results.append({
-                "doc": page["doc"],
-                "page_num": page["page_num"],
-                "score": float(score),
-                "snippet": page["text"][:200],
-            })
+            results.append(
+                {
+                    "doc": page["doc"],
+                    "page_num": page["page_num"],
+                    "score": float(score),
+                    "snippet": page["text"][:200],
+                }
+            )
 
         latency_ms = (time.perf_counter() - start) * 1000
 

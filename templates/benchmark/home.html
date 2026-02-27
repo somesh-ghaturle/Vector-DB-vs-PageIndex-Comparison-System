@@ -1,0 +1,118 @@
+{% extends "benchmark/base.html" %}
+{% block title %}Benchmark — Upload & Run{% endblock %}
+{% block nav_home %}active{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Vector DB vs PageIndex</h1>
+    <p>Upload PDFs and queries to benchmark retrieval pipelines head-to-head</p>
+</div>
+
+<form method="POST" action="{% url 'benchmark:run' %}" enctype="multipart/form-data" id="benchmarkForm">
+    {% csrf_token %}
+
+    <!-- Upload PDFs -->
+    <div class="card">
+        <div class="card-header">
+            <div class="icon">📄</div>
+            <h2>Upload Documents</h2>
+        </div>
+        <div class="form-group">
+            <div class="file-upload" id="dropZone">
+                <input type="file" name="pdfs" multiple accept=".pdf" required id="pdfInput">
+                <div class="upload-icon">📁</div>
+                <p>Drop PDFs here or click to browse</p>
+                <span>Supports multiple PDF files</span>
+            </div>
+            <div id="fileList" style="margin-top: 1rem;"></div>
+        </div>
+    </div>
+
+    <!-- Queries -->
+    <div class="card">
+        <div class="card-header">
+            <div class="icon">🔍</div>
+            <h2>Search Queries</h2>
+        </div>
+        <div class="form-group">
+            <label for="id_queries">Queries (one per line)</label>
+            <textarea name="queries" class="form-control" rows="6" required
+                placeholder="data preprocessing steps&#10;supervised learning algorithms&#10;neural network architecture&#10;gradient descent optimization&#10;overfitting and regularization"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="id_relevant_pages">Ground-Truth Relevant Pages <span class="badge-green">Optional</span></label>
+            <textarea name="relevant_pages" class="form-control" rows="6"
+                placeholder="[3, 4]&#10;[7]&#10;[10, 11]&#10;[5, 6]&#10;[8, 9]"></textarea>
+            <div class="help-text">One JSON list per line, matching query order. Leave blank to skip accuracy metrics.</div>
+        </div>
+    </div>
+
+    <!-- Settings -->
+    <div class="card">
+        <div class="card-header">
+            <div class="icon">⚙️</div>
+            <h2>Benchmark Settings</h2>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label for="id_top_k">Top-K Results</label>
+                <input type="number" name="top_k" class="form-control" value="5" min="1" max="50">
+            </div>
+            <div class="form-group">
+                <label for="id_num_runs">Timed Runs per Query</label>
+                <input type="number" name="num_runs" class="form-control" value="20" min="1" max="100">
+            </div>
+        </div>
+    </div>
+
+    <!-- Submit -->
+    <div style="text-align: center; margin-top: 1.5rem;">
+        <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+            ▶ Run Benchmark
+        </button>
+    </div>
+</form>
+
+{% if recent %}
+<div style="margin-top: 3rem;">
+    <h3 style="margin-bottom: 1rem; color: var(--gray-dark);">Recent Benchmarks</h3>
+    <ul class="session-list">
+        {% for s in recent %}
+        <li class="session-item">
+            <div>
+                <span class="status-dot completed"></span>
+                <strong>{{ s.id.hex|truncatechars:10 }}</strong>
+                &middot; {{ s.created_at|date:"M d, H:i" }}
+                &middot; {{ s.pdfs.count }} PDF(s), {{ s.queries.count }} queries
+            </div>
+            <a href="{% url 'benchmark:results' s.id %}" class="btn btn-outline" style="padding: 0.4rem 1rem; font-size: 0.85rem;">View Results</a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+// File list display
+const pdfInput = document.getElementById('pdfInput');
+const fileList = document.getElementById('fileList');
+pdfInput.addEventListener('change', () => {
+    const files = Array.from(pdfInput.files);
+    if (files.length) {
+        fileList.innerHTML = '<strong>' + files.length + ' file(s) selected:</strong><br>' +
+            files.map(f => '📄 ' + f.name + ' (' + (f.size / 1024).toFixed(0) + ' KB)').join('<br>');
+        fileList.style.color = '#2E7D32';
+    }
+});
+
+// Loading overlay on submit
+document.getElementById('benchmarkForm').addEventListener('submit', () => {
+    document.getElementById('loadingOverlay').classList.add('active');
+    document.getElementById('submitBtn').disabled = true;
+    document.getElementById('submitBtn').textContent = '⏳ Running...';
+});
+</script>
+{% endblock %}

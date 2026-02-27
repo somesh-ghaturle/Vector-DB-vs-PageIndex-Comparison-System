@@ -41,12 +41,14 @@ class PageIndexSearcher:
         for idx in top_indices:
             if scores[idx] > 0:
                 page = self.index.pages[idx]
-                results.append({
-                    "doc": page["doc"],
-                    "page_num": page["page_num"],
-                    "score": float(scores[idx]),
-                    "snippet": page["text"][:200],
-                })
+                results.append(
+                    {
+                        "doc": page["doc"],
+                        "page_num": page["page_num"],
+                        "score": float(scores[idx]),
+                        "snippet": page["text"][:200],
+                    }
+                )
 
         latency_ms = (time.perf_counter() - start) * 1000
 

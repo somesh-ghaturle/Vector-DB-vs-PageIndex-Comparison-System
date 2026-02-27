@@ -59,9 +59,7 @@ def main():
     parser.add_argument(
         "--runs", type=int, default=20, help="Timed runs per query for latency"
     )
-    parser.add_argument(
-        "--output", default="results.csv", help="Output CSV path"
-    )
+    parser.add_argument("--output", default="results.csv", help="Output CSV path")
     args = parser.parse_args()
 
     # Validate inputs
@@ -106,8 +104,10 @@ def main():
 
     # Speed
     pi_speed = measure_query_latency(
-        pi_searcher.search, [q["query"] for q in queries],
-        top_k=args.top_k, timed_runs=args.runs,
+        pi_searcher.search,
+        [q["query"] for q in queries],
+        top_k=args.top_k,
+        timed_runs=args.runs,
     )
     print_metric("Avg query latency", f"{pi_speed['avg_latency_ms']:.3f}", "ms")
     print_metric("P95 query latency", f"{pi_speed['p95_latency_ms']:.3f}", "ms")
@@ -160,8 +160,10 @@ def main():
 
     # Speed
     v_speed = measure_query_latency(
-        v_searcher.search, [q["query"] for q in queries],
-        top_k=args.top_k, timed_runs=args.runs,
+        v_searcher.search,
+        [q["query"] for q in queries],
+        top_k=args.top_k,
+        timed_runs=args.runs,
     )
     print_metric("Avg query latency", f"{v_speed['avg_latency_ms']:.3f}", "ms")
     print_metric("P95 query latency", f"{v_speed['p95_latency_ms']:.3f}", "ms")
@@ -221,8 +223,13 @@ def main():
     # ── Key Insight ────────────────────────────────────────────────
 
     print_header("KEY INSIGHT")
-    pi_faster = results["PageIndex"]["avg_latency_ms"] < results["VectorDB"]["avg_latency_ms"]
-    vdb_better_recall = results["VectorDB"][f"recall@{args.top_k}"] > results["PageIndex"][f"recall@{args.top_k}"]
+    pi_faster = (
+        results["PageIndex"]["avg_latency_ms"] < results["VectorDB"]["avg_latency_ms"]
+    )
+    vdb_better_recall = (
+        results["VectorDB"][f"recall@{args.top_k}"]
+        > results["PageIndex"][f"recall@{args.top_k}"]
+    )
 
     if pi_faster and vdb_better_recall:
         print("  PageIndex is FASTER but Vector DB has BETTER RECALL.")

@@ -17,7 +17,7 @@ class PageIndexBuilder:
     """Indexes PDF pages using TF-IDF for fast keyword-based retrieval."""
 
     def __init__(self):
-        self.pages: list[dict] = []          # {doc, page_num, text}
+        self.pages: list[dict] = []  # {doc, page_num, text}
         self.vectorizer: TfidfVectorizer | None = None
         self.tfidf_matrix = None
         self.build_time: float = 0.0
@@ -35,11 +35,13 @@ class PageIndexBuilder:
         for page_num in range(len(doc)):
             text = doc[page_num].get_text().strip()
             if text:
-                self.pages.append({
-                    "doc": doc_name,
-                    "page_num": page_num + 1,  # 1-indexed
-                    "text": text,
-                })
+                self.pages.append(
+                    {
+                        "doc": doc_name,
+                        "page_num": page_num + 1,  # 1-indexed
+                        "text": text,
+                    }
+                )
                 count += 1
         doc.close()
         return count
@@ -77,11 +79,14 @@ class PageIndexBuilder:
     def save(self, path: str = "pageindex.pkl") -> None:
         """Serialize the index to disk."""
         with open(path, "wb") as f:
-            pickle.dump({
-                "pages": self.pages,
-                "vectorizer": self.vectorizer,
-                "tfidf_matrix": self.tfidf_matrix,
-            }, f)
+            pickle.dump(
+                {
+                    "pages": self.pages,
+                    "vectorizer": self.vectorizer,
+                    "tfidf_matrix": self.tfidf_matrix,
+                },
+                f,
+            )
 
     def load(self, path: str = "pageindex.pkl") -> None:
         """Load a previously saved index."""

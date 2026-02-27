@@ -1,0 +1,18 @@
+{% extends "benchmark/base.html" %}
+{% block title %}Error — Benchmark Failed{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Benchmark Failed</h1>
+    <p>Session {{ session.id.hex|truncatechars:10 }}</p>
+</div>
+
+<div class="error-box">
+    <h3>❌ {{ error }}</h3>
+    <pre>{{ session.error_message }}</pre>
+</div>
+
+<div style="text-align: center; margin-top: 2rem;">
+    <a href="{% url 'benchmark:home' %}" class="btn btn-primary">Try Again</a>
+</div>
+{% endblock %}

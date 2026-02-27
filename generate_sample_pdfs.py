@@ -30,7 +30,6 @@ The three main categories of machine learning are:
 
 Each category has its own set of algorithms, use cases, and evaluation criteria.
 Machine learning has become essential in modern software engineering.""",
-
         # Page 2
         """Feature Engineering Techniques
 
@@ -51,7 +50,6 @@ Feature selection methods help reduce dimensionality:
 - Filter methods (correlation, chi-squared)
 - Wrapper methods (forward selection, backward elimination)
 - Embedded methods (L1 regularization, tree importance)""",
-
         # Page 3
         """Data Preprocessing Steps
 
@@ -79,7 +77,6 @@ Key preprocessing steps include:
    - Dimensionality reduction (PCA, t-SNE)
    - Numerosity reduction (sampling, clustering)
    - Data compression""",
-
         # Page 4
         """Advanced Data Preprocessing
 
@@ -101,7 +98,6 @@ Data preprocessing for images:
 - Normalization (pixel value scaling)
 - Data augmentation (rotation, flipping, color jittering)
 - Histogram equalization""",
-
         # Page 5
         """Gradient Descent Optimization
 
@@ -122,7 +118,6 @@ Learning rate schedules:
 - Exponential decay
 - Cosine annealing
 - Warm-up strategies""",
-
         # Page 6
         """Advanced Optimization Algorithms
 
@@ -146,7 +141,6 @@ Second-order methods:
 Gradient clipping prevents exploding gradients:
 - Clip by value
 - Clip by norm""",
-
         # Page 7
         """Supervised Learning Algorithms
 
@@ -172,7 +166,6 @@ Key concepts:
 - Bias-variance tradeoff
 - Cross-validation for model selection
 - Hyperparameter tuning (grid search, random search, Bayesian optimization)""",
-
         # Page 8
         """Decision Tree Classification
 
@@ -198,7 +191,6 @@ Ensemble methods built on decision trees:
 - Random Forests: bagging + feature randomness
 - Gradient Boosting: XGBoost, LightGBM, CatBoost
 - AdaBoost: weighted sequential learning""",
-
         # Page 9
         """Overfitting and Regularization
 
@@ -224,7 +216,6 @@ The bias-variance tradeoff:
 - High bias: underfitting (model too simple)
 - High variance: overfitting (model too complex)
 - Goal: find the sweet spot that minimizes total error""",
-
         # Page 10
         """Neural Network Architecture
 
@@ -248,7 +239,6 @@ Activation functions:
 - Tanh: outputs value (-1, 1)
 - Softmax: multi-class probability distribution
 - GELU: smooth approximation of ReLU""",
-
         # Page 11
         """Deep Neural Network Architectures
 
@@ -273,7 +263,6 @@ Transformer Architecture:
 - Positional encoding
 - BERT, GPT, T5 family of models
 - Vision Transformers (ViT)""",
-
         # Page 12
         """Model Evaluation Metrics
 
@@ -299,7 +288,6 @@ Ranking metrics:
 - Recall@K: recall in top-K results
 - Mean Reciprocal Rank (MRR)
 - Normalized Discounted Cumulative Gain (NDCG)""",
-
         # Page 13
         """Cross Validation Strategy
 
@@ -328,7 +316,6 @@ Nested Cross-Validation:
 - Outer loop: estimate model performance
 - Inner loop: hyperparameter tuning
 - Prevents information leakage""",
-
         # Page 14
         """Dimensionality Reduction Methods
 
@@ -359,7 +346,6 @@ Applications:
 - Noise reduction
 - Computational efficiency
 - Avoiding curse of dimensionality""",
-
         # Page 15
         """Deployment and Production ML
 

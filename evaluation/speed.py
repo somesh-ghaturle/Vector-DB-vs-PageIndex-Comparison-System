@@ -43,7 +43,7 @@ def measure_query_latency(
         min_latency_ms, max_latency_ms.
     """
     # Warm up
-    for q in queries[:min(len(queries), warmup_runs)]:
+    for q in queries[: min(len(queries), warmup_runs)]:
         search_fn(q, top_k)
 
     all_latencies = []

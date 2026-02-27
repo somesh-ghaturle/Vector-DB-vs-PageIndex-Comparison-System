@@ -37,11 +37,13 @@ class DocumentEmbedder:
         for page_num in range(len(doc)):
             text = doc[page_num].get_text().strip()
             if text:
-                self.pages.append({
-                    "doc": doc_name,
-                    "page_num": page_num + 1,
-                    "text": text,
-                })
+                self.pages.append(
+                    {
+                        "doc": doc_name,
+                        "page_num": page_num + 1,
+                        "text": text,
+                    }
+                )
                 count += 1
         doc.close()
         return count

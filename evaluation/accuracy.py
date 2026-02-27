@@ -7,7 +7,9 @@ Computes Recall@K, Precision@K, and MRR against ground-truth annotations.
 from __future__ import annotations
 
 
-def recall_at_k(retrieved_pages: list[int], relevant_pages: list[int], k: int = 5) -> float:
+def recall_at_k(
+    retrieved_pages: list[int], relevant_pages: list[int], k: int = 5
+) -> float:
     """Fraction of relevant pages found in top-K results.
 
     recall@k = |retrieved ∩ relevant| / |relevant|
@@ -19,7 +21,9 @@ def recall_at_k(retrieved_pages: list[int], relevant_pages: list[int], k: int = 
     return len(retrieved_set & relevant_set) / len(relevant_set)
 
 
-def precision_at_k(retrieved_pages: list[int], relevant_pages: list[int], k: int = 5) -> float:
+def precision_at_k(
+    retrieved_pages: list[int], relevant_pages: list[int], k: int = 5
+) -> float:
     """Fraction of top-K results that are relevant.
 
     precision@k = |retrieved ∩ relevant| / k
@@ -78,14 +82,16 @@ def evaluate_queries(
         total_precision += p
         total_rr += rr
 
-        per_query.append({
-            "query": query_text,
-            "relevant_pages": relevant,
-            "retrieved_pages": retrieved,
-            "recall@k": round(r, 4),
-            "precision@k": round(p, 4),
-            "reciprocal_rank": round(rr, 4),
-        })
+        per_query.append(
+            {
+                "query": query_text,
+                "relevant_pages": relevant,
+                "retrieved_pages": retrieved,
+                "recall@k": round(r, 4),
+                "precision@k": round(p, 4),
+                "reciprocal_rank": round(rr, 4),
+            }
+        )
 
     n = len(queries) if queries else 1
 
