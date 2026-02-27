@@ -1,0 +1,52 @@
+[
+  {
+    "query": "data preprocessing steps",
+    "relevant_pages": [3, 4],
+    "doc": "sample"
+  },
+  {
+    "query": "supervised learning algorithms",
+    "relevant_pages": [7],
+    "doc": "sample"
+  },
+  {
+    "query": "neural network architecture",
+    "relevant_pages": [10, 11],
+    "doc": "sample"
+  },
+  {
+    "query": "gradient descent optimization",
+    "relevant_pages": [5, 6],
+    "doc": "sample"
+  },
+  {
+    "query": "overfitting and regularization",
+    "relevant_pages": [8, 9],
+    "doc": "sample"
+  },
+  {
+    "query": "feature engineering techniques",
+    "relevant_pages": [2, 3],
+    "doc": "sample"
+  },
+  {
+    "query": "model evaluation metrics",
+    "relevant_pages": [12],
+    "doc": "sample"
+  },
+  {
+    "query": "decision tree classification",
+    "relevant_pages": [7, 8],
+    "doc": "sample"
+  },
+  {
+    "query": "dimensionality reduction methods",
+    "relevant_pages": [14],
+    "doc": "sample"
+  },
+  {
+    "query": "cross validation strategy",
+    "relevant_pages": [13],
+    "doc": "sample"
+  }
+]

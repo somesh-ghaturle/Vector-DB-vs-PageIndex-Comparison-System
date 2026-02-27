@@ -1,0 +1,15 @@
+# Core
+PyMuPDF>=1.23.0
+sentence-transformers>=2.2.0
+faiss-cpu>=1.7.4
+
+# Evaluation
+psutil>=5.9.0
+numpy>=1.24.0
+pandas>=2.0.0
+
+# Visualization (stretch goal)
+matplotlib>=3.7.0
+
+# NLP
+scikit-learn>=1.3.0
